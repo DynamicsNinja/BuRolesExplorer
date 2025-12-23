@@ -276,7 +276,6 @@ namespace BuRolesExplorer
                     }
                     else
                     {
-                        // Reload user roles
                         ExecuteMethod(LoadUserRoles);
                     }
                 }

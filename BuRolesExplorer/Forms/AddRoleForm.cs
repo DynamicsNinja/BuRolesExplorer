@@ -3,6 +3,7 @@ using Microsoft.Xrm.Sdk;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace BuRolesExplorer.Forms
 {
@@ -10,13 +11,23 @@ namespace BuRolesExplorer.Forms
     {
         private readonly BuRolesExplorer _bre;
 
+        private const string RoleSearchPlaceholder = "Search roles...";
+        private readonly Color _placeholderColor = Color.Gray;
+        private readonly Color _textColor = Color.Black;
+
+        private readonly Timer _searchDebounceTimer;
+
         public AddRoleForm(BuRolesExplorer bre)
         {
             InitializeComponent();
 
             _bre = bre ?? throw new ArgumentNullException(nameof(bre));
 
+            _searchDebounceTimer = new Timer { Interval = 300 };
+            _searchDebounceTimer.Tick += SearchDebounceTimer_Tick;
+
             InitializeForm();
+            InitializeSearchPlaceholder();
             LoadBusinessUnits();
         }
 
@@ -29,7 +40,65 @@ namespace BuRolesExplorer.Forms
             cbBusinessUnits.ValueMember = nameof(ComboBoxItem<Entity>.Value);
 
             lbRoles.DisplayMember = nameof(ComboBoxItem<Entity>.Text);
+
+            cbBusinessUnits.SelectedIndexChanged += cbBusinessUnits_SelectedIndexChanged;
+            tbRoleSearch.TextChanged += tbRoleSearch_TextChanged;
         }
+
+        #region Search Placeholder + Debounce
+
+        private void InitializeSearchPlaceholder()
+        {
+            tbRoleSearch.Text = RoleSearchPlaceholder;
+            tbRoleSearch.ForeColor = _placeholderColor;
+
+            tbRoleSearch.Enter += tbRoleSearch_Enter;
+            tbRoleSearch.Leave += tbRoleSearch_Leave;
+        }
+
+        private void tbRoleSearch_Enter(object sender, EventArgs e)
+        {
+            if (tbRoleSearch.Text == RoleSearchPlaceholder)
+            {
+                tbRoleSearch.Text = string.Empty;
+                tbRoleSearch.ForeColor = _textColor;
+            }
+        }
+
+        private void tbRoleSearch_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(tbRoleSearch.Text))
+            {
+                tbRoleSearch.Text = RoleSearchPlaceholder;
+                tbRoleSearch.ForeColor = _placeholderColor;
+            }
+        }
+
+        private string GetSearchText()
+        {
+            return tbRoleSearch.Text == RoleSearchPlaceholder
+                ? string.Empty
+                : tbRoleSearch.Text.Trim();
+        }
+
+        private void tbRoleSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (tbRoleSearch.Text == RoleSearchPlaceholder)
+            {
+                return;
+            }
+
+            _searchDebounceTimer.Stop();
+            _searchDebounceTimer.Start();
+        }
+
+        private void SearchDebounceTimer_Tick(object sender, EventArgs e)
+        {
+            _searchDebounceTimer.Stop();
+            LoadRolesForSelectedBusinessUnit();
+        }
+
+        #endregion
 
         private void LoadBusinessUnits()
         {
@@ -41,7 +110,10 @@ namespace BuRolesExplorer.Forms
 
             cbBusinessUnits.DataSource = buItems;
 
-            if (!buItems.Any()) { return; }
+            if (!buItems.Any())
+            {
+                return;
+            }
 
             cbBusinessUnits.SelectedIndex = 0;
             LoadRolesForSelectedBusinessUnit();
@@ -61,14 +133,13 @@ namespace BuRolesExplorer.Forms
             }
 
             var selectedBuId = selectedBuItem.Value.Id;
-            var searchText = tbRoleSearch.Text?.Trim();
+            var searchText = GetSearchText();
 
             lbRoles.DataSource = null;
 
             var roleItems = _bre.Roles
                 .Where(r =>
                     r.GetAttributeValue<EntityReference>("businessunitid")?.Id == selectedBuId &&
-                    // any already assigned roles are excluded
                     _bre.UserRoles.All(ur => ur.Id != r.Id) &&
                     (string.IsNullOrEmpty(searchText) ||
                      r.GetAttributeValue<string>("name")
@@ -83,16 +154,6 @@ namespace BuRolesExplorer.Forms
             lbRoles.DataSource = roleItems;
         }
 
-        private void tbRoleSearch_TextChanged(object sender, EventArgs e)
-        {
-            LoadRolesForSelectedBusinessUnit();
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
             var selectedRole = (lbRoles.SelectedItem as ComboBoxItem<Entity>)?.Value;
@@ -100,20 +161,43 @@ namespace BuRolesExplorer.Forms
 
             if (selectedRole == null)
             {
-                MessageBox.Show("Please select a role to add.", "No Role Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Please select a role to add.",
+                    "No Role Selected",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
 
             try
             {
-                _bre.AddRole(selectedUser.ToEntityReference(), selectedRole.ToEntityReference());
-                MessageBox.Show($"Role '{selectedRole.GetAttributeValue<string>("name")}' has been assigned to user '{selectedUser.GetAttributeValue<string>("fullname")}'.", "Role Assigned", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _bre.AddRole(
+                    selectedUser.ToEntityReference(),
+                    selectedRole.ToEntityReference());
+
+                MessageBox.Show(
+                    $"Role '{selectedRole.GetAttributeValue<string>("name")}' has been assigned to user '{selectedUser.GetAttributeValue<string>("fullname")}'.",
+                    "Role Assigned",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred while assigning the role: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    $"An error occurred while assigning the role:\n{ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }
