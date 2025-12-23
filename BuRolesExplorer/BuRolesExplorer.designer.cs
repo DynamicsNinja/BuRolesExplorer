@@ -34,6 +34,7 @@
             this.dgvUserRoles = new System.Windows.Forms.DataGridView();
             this.RoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RoleBu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.gbUsers.SuspendLayout();
@@ -49,24 +50,26 @@
             this.toolStripMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbClose,
-            this.tssSeparator1});
+            this.tssSeparator1,
+            this.toolStripButton1});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
-            this.toolStripMenu.Size = new System.Drawing.Size(1597, 34);
+            this.toolStripMenu.Size = new System.Drawing.Size(1597, 33);
             this.toolStripMenu.TabIndex = 1;
             // 
             // tsbClose
             // 
-            this.tsbClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbClose.Image = ((System.Drawing.Image)(resources.GetObject("tsbClose.Image")));
             this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Size = new System.Drawing.Size(34, 29);
+            this.tsbClose.Size = new System.Drawing.Size(34, 28);
             this.tsbClose.Text = "X";
             this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
             // 
             // tssSeparator1
             // 
             this.tssSeparator1.Name = "tssSeparator1";
-            this.tssSeparator1.Size = new System.Drawing.Size(6, 34);
+            this.tssSeparator1.Size = new System.Drawing.Size(6, 38);
             // 
             // tableLayoutPanel1
             // 
@@ -76,10 +79,10 @@
             this.tableLayoutPanel1.Controls.Add(this.gbUsers, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.gbRoles, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 34);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 33);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1597, 887);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1597, 888);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // gbUsers
@@ -89,7 +92,7 @@
             this.gbUsers.Location = new System.Drawing.Point(3, 3);
             this.gbUsers.Name = "gbUsers";
             this.gbUsers.Padding = new System.Windows.Forms.Padding(8);
-            this.gbUsers.Size = new System.Drawing.Size(526, 881);
+            this.gbUsers.Size = new System.Drawing.Size(526, 882);
             this.gbUsers.TabIndex = 0;
             this.gbUsers.TabStop = false;
             this.gbUsers.Text = "Users";
@@ -105,7 +108,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(510, 846);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(510, 847);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tbUserSearch
@@ -123,7 +126,7 @@
             this.lbUsers.ItemHeight = 20;
             this.lbUsers.Location = new System.Drawing.Point(3, 43);
             this.lbUsers.Name = "lbUsers";
-            this.lbUsers.Size = new System.Drawing.Size(504, 800);
+            this.lbUsers.Size = new System.Drawing.Size(504, 801);
             this.lbUsers.TabIndex = 1;
             this.lbUsers.SelectedIndexChanged += new System.EventHandler(this.lbUsers_SelectedIndexChanged);
             // 
@@ -134,7 +137,7 @@
             this.gbRoles.Location = new System.Drawing.Point(535, 3);
             this.gbRoles.Name = "gbRoles";
             this.gbRoles.Padding = new System.Windows.Forms.Padding(8);
-            this.gbRoles.Size = new System.Drawing.Size(1059, 881);
+            this.gbRoles.Size = new System.Drawing.Size(1059, 882);
             this.gbRoles.TabIndex = 1;
             this.gbRoles.TabStop = false;
             this.gbRoles.Text = "User Roles";
@@ -150,7 +153,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1043, 846);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1043, 847);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // toolStrip1
@@ -197,7 +200,7 @@
             this.dgvUserRoles.Name = "dgvUserRoles";
             this.dgvUserRoles.ReadOnly = true;
             this.dgvUserRoles.RowHeadersWidth = 62;
-            this.dgvUserRoles.Size = new System.Drawing.Size(1037, 800);
+            this.dgvUserRoles.Size = new System.Drawing.Size(1037, 801);
             this.dgvUserRoles.TabIndex = 1;
             this.dgvUserRoles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUserRoles_CellClick);
             // 
@@ -214,6 +217,16 @@
             this.RoleBu.MinimumWidth = 8;
             this.RoleBu.Name = "RoleBu";
             this.RoleBu.ReadOnly = true;
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(34, 28);
+            this.toolStripButton1.Text = "toolStripButton1";
             // 
             // BuRolesExplorer
             // 
@@ -263,5 +276,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tsbAddRole;
         private System.Windows.Forms.ToolStripButton tsbDeleteRole;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
