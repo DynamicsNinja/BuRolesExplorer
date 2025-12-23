@@ -8,12 +8,18 @@ using System.Windows.Forms;
 using BuRolesExplorer.Forms;
 using Microsoft.Xrm.Sdk.Messages;
 using XrmToolBox.Extensibility;
+using XrmToolBox.Extensibility.Interfaces;
 
 namespace BuRolesExplorer
 {
-    public partial class BuRolesExplorer : PluginControlBase
+    public partial class BuRolesExplorer : PluginControlBase, IGitHubPlugin, IPayPalPlugin
     {
-        private Settings mySettings;
+        public string RepositoryName => "BuRolesExplorer";
+        public string UserName => "DynamicsNinja";
+        public string DonationDescription => "Thanks for supporting Business Unit Roles Explorer development!";
+        public string EmailAccount => "ivan.ficko@outlook.com";
+
+        private Settings _mySettings;
 
         private readonly Timer _searchTimer = new Timer { Interval = 300 };
 
@@ -37,9 +43,9 @@ namespace BuRolesExplorer
         private void MyPluginControl_Load(object sender, EventArgs e)
         {
             // Loads or creates the settings for the plugin
-            if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
+            if (!SettingsManager.Instance.TryLoad(GetType(), out _mySettings))
             {
-                mySettings = new Settings();
+                _mySettings = new Settings();
 
                 LogWarning("Settings not found => a new settings file has been created!");
             }
@@ -62,7 +68,7 @@ namespace BuRolesExplorer
         private void MyPluginControl_OnCloseTool(object sender, EventArgs e)
         {
             // Before leaving, save the settings
-            SettingsManager.Instance.Save(GetType(), mySettings);
+            SettingsManager.Instance.Save(GetType(), _mySettings);
         }
 
         /// <summary>
@@ -72,8 +78,8 @@ namespace BuRolesExplorer
         {
             base.UpdateConnection(newService, detail, actionName, parameter);
 
-            if (mySettings == null || detail == null) { return; }
-            mySettings.LastUsedOrganizationWebappUrl = detail.WebApplicationUrl;
+            if (_mySettings == null || detail == null) { return; }
+            _mySettings.LastUsedOrganizationWebappUrl = detail.WebApplicationUrl;
             LogInfo("Connection has changed to: {0}", detail.WebApplicationUrl);
         }
 

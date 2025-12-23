@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("BuRolesExplorer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Span d.d.")]
+[assembly: AssemblyCompany("Ivan Ficko")]
 [assembly: AssemblyProduct("BuRolesExplorer")]
-[assembly: AssemblyCopyright("Copyright © Span d.d. 2025")]
+[assembly: AssemblyCopyright("Copyright © Ivan Ficko 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

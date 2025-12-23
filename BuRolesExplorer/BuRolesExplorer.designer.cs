@@ -79,7 +79,7 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 34);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1597, 924);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1597, 887);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // gbUsers
@@ -89,7 +89,7 @@
             this.gbUsers.Location = new System.Drawing.Point(3, 3);
             this.gbUsers.Name = "gbUsers";
             this.gbUsers.Padding = new System.Windows.Forms.Padding(8);
-            this.gbUsers.Size = new System.Drawing.Size(526, 918);
+            this.gbUsers.Size = new System.Drawing.Size(526, 881);
             this.gbUsers.TabIndex = 0;
             this.gbUsers.TabStop = false;
             this.gbUsers.Text = "Users";
@@ -105,7 +105,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(510, 883);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(510, 846);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tbUserSearch
@@ -123,7 +123,7 @@
             this.lbUsers.ItemHeight = 20;
             this.lbUsers.Location = new System.Drawing.Point(3, 43);
             this.lbUsers.Name = "lbUsers";
-            this.lbUsers.Size = new System.Drawing.Size(504, 837);
+            this.lbUsers.Size = new System.Drawing.Size(504, 800);
             this.lbUsers.TabIndex = 1;
             this.lbUsers.SelectedIndexChanged += new System.EventHandler(this.lbUsers_SelectedIndexChanged);
             // 
@@ -134,7 +134,7 @@
             this.gbRoles.Location = new System.Drawing.Point(535, 3);
             this.gbRoles.Name = "gbRoles";
             this.gbRoles.Padding = new System.Windows.Forms.Padding(8);
-            this.gbRoles.Size = new System.Drawing.Size(1059, 918);
+            this.gbRoles.Size = new System.Drawing.Size(1059, 881);
             this.gbRoles.TabIndex = 1;
             this.gbRoles.TabStop = false;
             this.gbRoles.Text = "User Roles";
@@ -150,7 +150,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1043, 883);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1043, 846);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // toolStrip1
@@ -197,7 +197,7 @@
             this.dgvUserRoles.Name = "dgvUserRoles";
             this.dgvUserRoles.ReadOnly = true;
             this.dgvUserRoles.RowHeadersWidth = 62;
-            this.dgvUserRoles.Size = new System.Drawing.Size(1037, 837);
+            this.dgvUserRoles.Size = new System.Drawing.Size(1037, 800);
             this.dgvUserRoles.TabIndex = 1;
             this.dgvUserRoles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUserRoles_CellClick);
             // 
@@ -220,7 +220,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.toolStripMenu);
             this.Name = "BuRolesExplorer";
-            this.Size = new System.Drawing.Size(1597, 958);
+            this.Size = new System.Drawing.Size(1597, 921);
             this.ConnectionUpdated += new XrmToolBox.Extensibility.PluginControlBase.ConnectionUpdatedHandler(this.BuRolesExplorer_ConnectionUpdated);
             this.Load += new System.EventHandler(this.MyPluginControl_Load);
             this.toolStripMenu.ResumeLayout(false);

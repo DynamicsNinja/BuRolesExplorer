@@ -245,7 +245,7 @@
     <Compile Include="Forms\AddRoleForm.Designer.cs">
       <DependentUpon>AddRoleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyPlugin.cs" />
+    <Compile Include="PluginDescription.cs" />
     <Compile Include="BuRolesExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -263,6 +263,7 @@
   <ItemGroup>
     <EmbeddedResource Include="BuRolesExplorer.resx">
       <DependentUpon>BuRolesExplorer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddRoleForm.resx">
       <DependentUpon>AddRoleForm.cs</DependentUpon>
