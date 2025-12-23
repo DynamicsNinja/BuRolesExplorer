@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using BuRolesExplorer.Forms;
+using Microsoft.Xrm.Sdk.Messages;
 using XrmToolBox.Extensibility;
 
 namespace BuRolesExplorer
@@ -17,7 +19,11 @@ namespace BuRolesExplorer
 
         public List<Entity> Users;
         public List<Entity> FilteredUsers;
+        public List<Entity> BusinessUnits;
+        public List<Entity> Roles;
+
         public Entity SelectedUser;
+        public Entity SelectedRole;
 
         public List<Entity> UserRoles;
 
@@ -30,8 +36,6 @@ namespace BuRolesExplorer
 
         private void MyPluginControl_Load(object sender, EventArgs e)
         {
-            ShowInfoNotification("This is a notification that can lead to XrmToolBox repository", new Uri("https://github.com/MscrmTools/XrmToolBox"));
-
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
             {
@@ -76,6 +80,62 @@ namespace BuRolesExplorer
         private void BuRolesExplorer_ConnectionUpdated(object sender, ConnectionUpdatedEventArgs e)
         {
             ExecuteMethod(LoadUsers);
+            ExecuteMethod(LoadBusinessUnits);
+            ExecuteMethod(LoadRoles);
+        }
+
+        private void LoadRoles()
+        {
+            WorkAsync(new WorkAsyncInfo("Loading security roles...",
+                (eventargs) =>
+                {
+                    var qe = new QueryExpression("role");
+                    qe.ColumnSet = new ColumnSet("name", "businessunitid");
+                    qe.AddOrder("name", OrderType.Ascending);
+
+                    eventargs.Result = Service.RetrieveMultiple(qe).Entities.ToList();
+                })
+            {
+                PostWorkCallBack = (completedargs) =>
+                {
+                    if (completedargs.Error != null)
+                    {
+                        ShowErrorDialog(completedargs.Error);
+                    }
+                    else
+                    {
+                        Roles = completedargs.Result as List<Entity>;
+                    }
+                }
+            });
+        }
+
+
+        private void LoadBusinessUnits()
+        {
+            WorkAsync(new WorkAsyncInfo("Loading business units...",
+                (eventargs) =>
+                {
+                    var qe = new QueryExpression("businessunit");
+                    qe.ColumnSet = new ColumnSet("name");
+                    qe.AddOrder("name", OrderType.Ascending);
+
+                    eventargs.Result = Service.RetrieveMultiple(qe).Entities.ToList();
+                    BusinessUnits = eventargs.Result as List<Entity>;
+                })
+            {
+                PostWorkCallBack = (completedargs) =>
+                {
+                    if (completedargs.Error != null)
+                    {
+                        ShowErrorDialog(completedargs.Error);
+                    }
+                    else
+                    {
+                        BusinessUnits = completedargs.Result as List<Entity>;
+                    }
+                }
+            });
         }
 
         private void LoadUsers()
@@ -149,13 +209,78 @@ namespace BuRolesExplorer
 
         private void lbUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // get selected user
             var selectedIndex = lbUsers.SelectedIndex;
             if (selectedIndex < 0 || selectedIndex >= Users.Count) { return; }
 
             SelectedUser = FilteredUsers[selectedIndex];
 
+            tsbAddRole.Enabled = true;
+
             ExecuteMethod(LoadUserRoles);
+        }
+
+        private void RemoveRole(EntityReference userRef, EntityReference roleRef)
+        {
+            WorkAsync(new WorkAsyncInfo("Removing security role...",
+                (eventargs) =>
+                {
+                    var disassociateRequest = new DisassociateRequest
+                    {
+                        Target = userRef,
+                        RelatedEntities = new EntityReferenceCollection { roleRef },
+                        Relationship = new Relationship("systemuserroles_association")
+                    };
+
+                    var disassociateResponse = Service.Execute(disassociateRequest) as DisassociateResponse;
+
+                    eventargs.Result = disassociateResponse;
+                })
+            {
+                PostWorkCallBack = (completedargs) =>
+                {
+                    if (completedargs.Error != null)
+                    {
+                        ShowErrorDialog(completedargs.Error);
+                    }
+                    else
+                    {
+                        // Reload user roles
+                        ExecuteMethod(LoadUserRoles);
+                    }
+                }
+            });
+        }
+
+        public void AddRole(EntityReference userRef, EntityReference roleRef)
+        {
+            WorkAsync(new WorkAsyncInfo("Adding security role...",
+                (eventargs) =>
+                {
+                    var associateRequest = new AssociateRequest
+                    {
+                        Target = userRef,
+                        RelatedEntities = new EntityReferenceCollection { roleRef },
+                        Relationship = new Relationship("systemuserroles_association")
+                    };
+
+                    var associateResponse = Service.Execute(associateRequest) as AssociateResponse;
+
+                    eventargs.Result = associateResponse;
+                })
+            {
+                PostWorkCallBack = (completedargs) =>
+                {
+                    if (completedargs.Error != null)
+                    {
+                        ShowErrorDialog(completedargs.Error);
+                    }
+                    else
+                    {
+                        // Reload user roles
+                        ExecuteMethod(LoadUserRoles);
+                    }
+                }
+            });
         }
 
         private void LoadUserRoles()
@@ -206,6 +331,8 @@ namespace BuRolesExplorer
                         if (dgvUserRoles.Rows.Count > 0)
                         {
                             dgvUserRoles.Rows[0].Selected = true;
+                            SelectedRole = roles[0];
+                            tsbDeleteRole.Enabled = true;
                         }
 
                         UserRoles = roles;
@@ -217,10 +344,55 @@ namespace BuRolesExplorer
         private void dgvUserRoles_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // select whole row on cell click
-            if (e.RowIndex >= 0)
+            if (e.RowIndex < 0) { return; }
+
+            dgvUserRoles.Rows[e.RowIndex].Selected = true;
+
+            SelectedRole = UserRoles[e.RowIndex];
+            tsbDeleteRole.Enabled = true;
+        }
+
+        private void tsbDeleteRole_Click(object sender, EventArgs e)
+        {
+            // prompt for confirmation
+            if (SelectedUser == null || SelectedRole == null)
             {
-                dgvUserRoles.Rows[e.RowIndex].Selected = true;
+                MessageBox.Show("Please select a user and a role to delete.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var userName = SelectedUser.GetAttributeValue<string>("fullname");
+            var roleName = SelectedRole.GetAttributeValue<string>("name");
+            var buName = SelectedRole.GetAttributeValue<EntityReference>("businessunitid")?.Name ?? "N/A";
+
+            var result = MessageBox.Show(
+                $"Are you sure you want to remove this role assignment?\n\n" +
+                $"User: {userName}\n" +
+                $"Role: {roleName}\n" +
+                $"Business Unit: {buName}",
+                "Confirm Role Removal",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.No) { return; }
+
+            RemoveRole(SelectedUser.ToEntityReference(), SelectedRole.ToEntityReference());
+        }
+
+        private void tsbAddRole_Click(object sender, EventArgs e)
+        {
+            using (var addRoleForm = new AddRoleForm(this))
+            {
+                // Center relative to the parent form
+                addRoleForm.StartPosition = FormStartPosition.CenterParent;
+
+                var dialogResult = addRoleForm.ShowDialog(this);
+                if (dialogResult == DialogResult.OK)
+                {
+                    ExecuteMethod(LoadUserRoles);
+                }
             }
         }
+
     }
 }
