@@ -9,6 +9,7 @@ using BuRolesExplorer.Forms;
 using Microsoft.Xrm.Sdk.Messages;
 using XrmToolBox.Extensibility;
 using XrmToolBox.Extensibility.Interfaces;
+using System.Diagnostics;
 
 namespace BuRolesExplorer
 {
@@ -216,7 +217,7 @@ namespace BuRolesExplorer
         private void lbUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedIndex = lbUsers.SelectedIndex;
-            if (selectedIndex < 0 || selectedIndex >= Users.Count) { return; }
+            if (selectedIndex < 0 || selectedIndex >= FilteredUsers.Count) { return; }
 
             SelectedUser = FilteredUsers[selectedIndex];
 
@@ -392,12 +393,16 @@ namespace BuRolesExplorer
                 addRoleForm.StartPosition = FormStartPosition.CenterParent;
 
                 var dialogResult = addRoleForm.ShowDialog(this);
-                if (dialogResult == DialogResult.OK)
-                {
-                    ExecuteMethod(LoadUserRoles);
-                }
+                if (dialogResult != DialogResult.OK) { return; }
+                ExecuteMethod(LoadUserRoles);
             }
         }
 
+        private void tsbDonate_Click(object sender, EventArgs e)
+        {
+            var url = "https://www.buymeacoffee.com/dynamicsninja";
+
+            Process.Start(url);
+        }
     }
 }
