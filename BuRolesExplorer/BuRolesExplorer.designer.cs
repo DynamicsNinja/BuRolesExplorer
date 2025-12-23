@@ -22,6 +22,7 @@
             this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbDonate = new System.Windows.Forms.ToolStripButton();
+            this.tsbRefresh = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.gbUsers = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -51,7 +52,8 @@
             this.toolStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbClose,
             this.tssSeparator1,
-            this.tsbDonate});
+            this.tsbDonate,
+            this.tsbRefresh});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
             this.toolStripMenu.Size = new System.Drawing.Size(1597, 34);
@@ -80,6 +82,15 @@
             this.tsbDonate.Size = new System.Drawing.Size(98, 29);
             this.tsbDonate.Text = "Donate";
             this.tsbDonate.Click += new System.EventHandler(this.tsbDonate_Click);
+            // 
+            // tsbRefresh
+            // 
+            this.tsbRefresh.Image = ((System.Drawing.Image)(resources.GetObject("tsbRefresh.Image")));
+            this.tsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbRefresh.Name = "tsbRefresh";
+            this.tsbRefresh.Size = new System.Drawing.Size(98, 29);
+            this.tsbRefresh.Text = "Refresh";
+            this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -277,5 +288,6 @@
         private System.Windows.Forms.ToolStripButton tsbAddRole;
         private System.Windows.Forms.ToolStripButton tsbDeleteRole;
         private System.Windows.Forms.ToolStripButton tsbDonate;
+        private System.Windows.Forms.ToolStripButton tsbRefresh;
     }
 }

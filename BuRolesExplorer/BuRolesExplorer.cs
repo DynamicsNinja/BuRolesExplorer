@@ -86,9 +86,7 @@ namespace BuRolesExplorer
 
         private void BuRolesExplorer_ConnectionUpdated(object sender, ConnectionUpdatedEventArgs e)
         {
-            ExecuteMethod(LoadUsers);
-            ExecuteMethod(LoadBusinessUnits);
-            ExecuteMethod(LoadRoles);
+            InitializeData();
         }
 
         private void LoadRoles()
@@ -403,6 +401,29 @@ namespace BuRolesExplorer
             var url = "https://www.buymeacoffee.com/dynamicsninja";
 
             Process.Start(url);
+        }
+
+        private void InitializeData()
+        {
+            // Reset UI state
+            SelectedUser = null;
+            SelectedRole = null;
+            UserRoles = null;
+
+            lbUsers.Items.Clear();
+            dgvUserRoles.Rows.Clear();
+
+            tsbAddRole.Enabled = false;
+            tsbDeleteRole.Enabled = false;
+
+            ExecuteMethod(LoadUsers);
+            ExecuteMethod(LoadBusinessUnits);
+            ExecuteMethod(LoadRoles);
+        }
+
+        private void tsbRefresh_Click(object sender, EventArgs e)
+        {
+            InitializeData();
         }
     }
 }
