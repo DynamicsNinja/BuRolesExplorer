@@ -1,4 +1,4 @@
-﻿namespace BuRolesExplorer
+﻿namespace Fic.XTB.FlowExecutionHistory
 {
     partial class BuRolesExplorer
     {

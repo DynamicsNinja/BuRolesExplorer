@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Windows.Forms;
-using BuRolesExplorer.Proxy;
+using Fic.XTB.FlowExecutionHistory.Proxy;
 using Microsoft.Xrm.Sdk;
 
-namespace BuRolesExplorer.Forms
+namespace Fic.XTB.FlowExecutionHistory.Forms
 {
     public partial class CopyRolesForm : Form
     {

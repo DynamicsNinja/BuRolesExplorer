@@ -1,4 +1,4 @@
-﻿namespace BuRolesExplorer.Proxy
+﻿namespace Fic.XTB.FlowExecutionHistory.Proxy
 {
     public class ComboBoxItem<T>
     {

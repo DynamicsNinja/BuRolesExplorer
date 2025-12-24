@@ -1,4 +1,4 @@
-﻿namespace BuRolesExplorer.Forms
+﻿namespace Fic.XTB.FlowExecutionHistory.Forms
 {
     partial class CopyRolesForm
     {

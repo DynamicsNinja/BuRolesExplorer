@@ -8,8 +8,8 @@
     <ProjectGuid>{67C59F33-E19B-48D6-96BD-74F0002B4881}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuRolesExplorer</RootNamespace>
-    <AssemblyName>BuRolesExplorer</AssemblyName>
+    <RootNamespace>Fic.XTB.FlowExecutionHistory</RootNamespace>
+    <AssemblyName>Fic.XTB.FlowExecutionHistory</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>

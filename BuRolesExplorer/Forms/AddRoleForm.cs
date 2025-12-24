@@ -1,12 +1,12 @@
-﻿using BuRolesExplorer.Proxy;
-using Microsoft.Xrm.Sdk;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using System.Drawing;
+using Fic.XTB.FlowExecutionHistory.Proxy;
+using Microsoft.Xrm.Sdk;
 
-namespace BuRolesExplorer.Forms
+namespace Fic.XTB.FlowExecutionHistory.Forms
 {
     public partial class AddRoleForm : Form
     {
