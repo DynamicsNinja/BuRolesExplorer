@@ -1,6 +1,7 @@
 ﻿using BuRolesExplorer.Proxy;
 using Microsoft.Xrm.Sdk;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Drawing;
@@ -171,9 +172,9 @@ namespace BuRolesExplorer.Forms
 
             try
             {
-                _bre.AddRole(
+                _bre.AddRoles(
                     selectedUser.ToEntityReference(),
-                    selectedRole.ToEntityReference());
+                    new List<EntityReference> { selectedRole.ToEntityReference() });
 
                 MessageBox.Show(
                     $"Role '{selectedRole.GetAttributeValue<string>("name")}' has been assigned to user '{selectedUser.GetAttributeValue<string>("fullname")}'.",

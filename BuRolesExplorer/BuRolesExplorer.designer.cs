@@ -36,6 +36,7 @@
             this.dgvUserRoles = new System.Windows.Forms.DataGridView();
             this.RoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RoleBu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tsbCopyRoles = new System.Windows.Forms.ToolStripButton();
             this.toolStripMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.gbUsers.SuspendLayout();
@@ -88,7 +89,7 @@
             this.tsbRefresh.Image = ((System.Drawing.Image)(resources.GetObject("tsbRefresh.Image")));
             this.tsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbRefresh.Name = "tsbRefresh";
-            this.tsbRefresh.Size = new System.Drawing.Size(98, 29);
+            this.tsbRefresh.Size = new System.Drawing.Size(98, 33);
             this.tsbRefresh.Text = "Refresh";
             this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
             // 
@@ -183,7 +184,8 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbAddRole,
-            this.tsbDeleteRole});
+            this.tsbDeleteRole,
+            this.tsbCopyRoles});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1043, 40);
@@ -239,6 +241,16 @@
             this.RoleBu.Name = "RoleBu";
             this.RoleBu.ReadOnly = true;
             // 
+            // tsbCopyRoles
+            // 
+            this.tsbCopyRoles.Enabled = false;
+            this.tsbCopyRoles.Image = ((System.Drawing.Image)(resources.GetObject("tsbCopyRoles.Image")));
+            this.tsbCopyRoles.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCopyRoles.Name = "tsbCopyRoles";
+            this.tsbCopyRoles.Size = new System.Drawing.Size(129, 35);
+            this.tsbCopyRoles.Text = "Copy Roles";
+            this.tsbCopyRoles.Click += new System.EventHandler(this.tsbCopyRoles_Click);
+            // 
             // BuRolesExplorer
             // 
             this.Controls.Add(this.tableLayoutPanel1);
@@ -289,5 +301,6 @@
         private System.Windows.Forms.ToolStripButton tsbDeleteRole;
         private System.Windows.Forms.ToolStripButton tsbDonate;
         private System.Windows.Forms.ToolStripButton tsbRefresh;
+        private System.Windows.Forms.ToolStripButton tsbCopyRoles;
     }
 }

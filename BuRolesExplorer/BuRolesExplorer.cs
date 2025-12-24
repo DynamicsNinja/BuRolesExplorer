@@ -220,19 +220,20 @@ namespace BuRolesExplorer
             SelectedUser = FilteredUsers[selectedIndex];
 
             tsbAddRole.Enabled = true;
+            tsbCopyRoles.Enabled = true;
 
             ExecuteMethod(LoadUserRoles);
         }
 
-        private void RemoveRole(EntityReference userRef, EntityReference roleRef)
+        private void RemoveRoles(EntityReference userRef, List<EntityReference> roleRefs)
         {
-            WorkAsync(new WorkAsyncInfo("Removing security role...",
+            WorkAsync(new WorkAsyncInfo($"Removing security role{(roleRefs.Count == 1 ? "" : "s")}...",
                 (eventargs) =>
                 {
                     var disassociateRequest = new DisassociateRequest
                     {
                         Target = userRef,
-                        RelatedEntities = new EntityReferenceCollection { roleRef },
+                        RelatedEntities = new EntityReferenceCollection(roleRefs),
                         Relationship = new Relationship("systemuserroles_association")
                     };
 
@@ -256,15 +257,15 @@ namespace BuRolesExplorer
             });
         }
 
-        public void AddRole(EntityReference userRef, EntityReference roleRef)
+        public void AddRoles(EntityReference userRef, List<EntityReference> roleRefs)
         {
-            WorkAsync(new WorkAsyncInfo("Adding security role...",
+            WorkAsync(new WorkAsyncInfo($"Adding security role{(roleRefs.Count == 1 ? "" : "s")}...",
                 (eventargs) =>
                 {
                     var associateRequest = new AssociateRequest
                     {
                         Target = userRef,
-                        RelatedEntities = new EntityReferenceCollection { roleRef },
+                        RelatedEntities = new EntityReferenceCollection(roleRefs),
                         Relationship = new Relationship("systemuserroles_association")
                     };
 
@@ -380,7 +381,7 @@ namespace BuRolesExplorer
 
             if (result == DialogResult.No) { return; }
 
-            RemoveRole(SelectedUser.ToEntityReference(), SelectedRole.ToEntityReference());
+            RemoveRoles(SelectedUser.ToEntityReference(), new List<EntityReference> { SelectedRole.ToEntityReference() });
         }
 
         private void tsbAddRole_Click(object sender, EventArgs e)
@@ -424,6 +425,12 @@ namespace BuRolesExplorer
         private void tsbRefresh_Click(object sender, EventArgs e)
         {
             InitializeData();
+        }
+
+        private void tsbCopyRoles_Click(object sender, EventArgs e)
+        {
+            var copyRolesForm = new CopyRolesForm(this);
+            copyRolesForm.ShowDialog();
         }
     }
 }
