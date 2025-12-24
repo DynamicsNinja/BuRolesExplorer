@@ -1,6 +1,6 @@
 # Business Unit Roles Explorer for [XrmToolBox](http://www.xrmtoolbox.com)
 
-![Nuget](https://img.shields.io/nuget/dt/Fic.XTB.FlowExecutionHistory) ![Nuget](https://img.shields.io/nuget/v/Fic.XTB.FlowExecutionHistory)
+![Nuget](https://img.shields.io/nuget/dt/Fic.XTB.BusinessUnitRolesExplorer) ![Nuget](https://img.shields.io/nuget/v/Fic.XTB.BusinessUnitRolesExplorer)
 
 
 Business Unit Roles Explorer is an XrmToolBox plugin that allows administrators to easily browse, assign, remove, and copy security roles for users across business units in Microsoft Dynamics 365 / Dataverse.
@@ -16,6 +16,8 @@ If you find this tool useful and would like to support its development, you can 
 Your support is greatly appreciated!
 
 ## Preview
+
+!["BRE Demo"](docs/img/bre-demo.gif)
 
 ## Features
 

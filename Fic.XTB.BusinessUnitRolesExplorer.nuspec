@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Fic.XTB.BusinessUnitRolesExplorer</id>
+    <version>1.2025.12.2</version>
+    <title>Business Unit Roles Explorer for XrmToolBox</title>
+    <authors>Ivan Ficko</authors>
+    <owners></owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/DynamicsNinja/BuRolesExplorer</projectUrl>
+    <iconUrl>https://i.ibb.co/qLvwwTxb/bre-300.png</iconUrl>
+    <description>XrmToolBox tool for browsing Dataverse users and managing their security role assignments across business units, including searching users and adding or removing roles.</description>
+    <summary>XrmToolBox tool for browsing Dataverse users and managing their security role assignments across business units, including searching users and adding or removing roles.</summary>
+    <releaseNotes>1.2025.12.2
+- Initial release</releaseNotes>
+    <copyright>Copyright 2025 Ivan Ficko</copyright>
+    <tags>XrmToolBox Plugins BusinessUnitRolesExplorer</tags>
+    <dependencies>
+      <dependency id="XrmToolBox" version="1.2018.6.25" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="BuRolesExplorer\bin\Release\Fic.XTB.BusinessUnitRolesExplorer.dll" target="lib\net472\Plugins\Fic.XTB.BusinessUnitRolesExplorer.dll" />
+  </files>
+</package>
