@@ -330,13 +330,14 @@ namespace Fic.XTB.FlowExecutionHistory
                         {
                             var roleName = role.GetAttributeValue<string>("name");
                             var businessUnit = role.GetAttributeValue<EntityReference>("businessunitid")?.Name ?? "N/A";
-                            dgvUserRoles.Rows.Add(roleName, businessUnit);
+                            var rowIndex = dgvUserRoles.Rows.Add(roleName, businessUnit);
+                            dgvUserRoles.Rows[rowIndex].Tag = role;
                         }
 
                         if (dgvUserRoles.Rows.Count > 0)
                         {
                             dgvUserRoles.Rows[0].Selected = true;
-                            SelectedRole = roles[0];
+                            SelectedRole = dgvUserRoles.Rows[0].Tag as Entity;
                             tsbDeleteRole.Enabled = true;
                         }
 
@@ -353,7 +354,7 @@ namespace Fic.XTB.FlowExecutionHistory
 
             dgvUserRoles.Rows[e.RowIndex].Selected = true;
 
-            SelectedRole = UserRoles[e.RowIndex];
+            SelectedRole = dgvUserRoles.Rows[e.RowIndex].Tag as Entity;
             tsbDeleteRole.Enabled = true;
         }
 
