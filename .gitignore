@@ -306,6 +306,9 @@ _Pvt_Extensions
 .paket/paket.exe
 paket-files/
 
+# NuGet executables
+.nuget/nuget.exe
+
 # FAKE - F# Make
 .fake/
 
