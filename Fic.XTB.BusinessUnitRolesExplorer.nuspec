@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Fic.XTB.BusinessUnitRolesExplorer</id>
-    <version>1.2025.12.2</version>
+    <version>1.2026.1.1</version>
     <title>Business Unit Roles Explorer for XrmToolBox</title>
     <authors>Ivan Ficko</authors>
     <owners></owners>
@@ -11,7 +11,9 @@
     <iconUrl>https://i.ibb.co/qLvwwTxb/bre-300.png</iconUrl>
     <description>XrmToolBox tool for browsing Dataverse users and managing their security role assignments across business units, including searching users and adding or removing roles.</description>
     <summary>XrmToolBox tool for browsing Dataverse users and managing their security role assignments across business units, including searching users and adding or removing roles.</summary>
-    <releaseNotes>1.2025.12.2
+    <releaseNotes>1.2026.1.1
+- Fixed issue when deleting sorted roles
+1.2025.12.2
 - Initial release</releaseNotes>
     <copyright>Copyright 2025 Ivan Ficko</copyright>
     <tags>XrmToolBox Plugins BusinessUnitRolesExplorer</tags>
