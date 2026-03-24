@@ -20,6 +20,8 @@ namespace Fic.XTB.FlowExecutionHistory
         public string DonationDescription => "Thanks for supporting Business Unit Roles Explorer development!";
         public string EmailAccount => "ivan.ficko@outlook.com";
 
+        private const int MaxPageSize = 5000;
+
         private Settings _mySettings;
 
         private readonly Timer _searchTimer = new Timer { Interval = 300 };
@@ -151,9 +153,20 @@ namespace Fic.XTB.FlowExecutionHistory
                     var qe = new QueryExpression("systemuser");
                     qe.ColumnSet = new ColumnSet("fullname");
                     qe.AddOrder("fullname", OrderType.Ascending);
+                    qe.PageInfo = new PagingInfo { PageNumber = 1, Count = MaxPageSize };
 
-                    eventargs.Result = Service.RetrieveMultiple(qe).Entities.ToList();
-                    Users = eventargs.Result as List<Entity>;
+                    var allUsers = new List<Entity>();
+                    EntityCollection result;
+                    do
+                    {
+                        result = Service.RetrieveMultiple(qe);
+                        allUsers.AddRange(result.Entities);
+                        qe.PageInfo.PageNumber++;
+                        qe.PageInfo.PagingCookie = result.PagingCookie;
+                    } while (result.MoreRecords);
+
+                    eventargs.Result = allUsers;
+                    Users = allUsers;
                     FilteredUsers = new List<Entity>(Users);
                 })
             {
